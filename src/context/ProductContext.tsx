@@ -19,6 +19,7 @@ export interface Product {
   updatedBy: string;
   price?: number;
   unit?: string;
+  showPricing?: boolean;
   keyFeatures?: string[]; // Changed from Record<string, string> to string[] to match firebase-db.ts
   specifications?: Record<string, string>;
 }
@@ -34,7 +35,7 @@ interface ProductContextType {
   updateProductImage: (productId: string, imageUrl: string) => Promise<void>;
   updateFeaturedStatus: (productId: string, featured: boolean) => Promise<void>;
   updateStockStatus: (productId: string, inStock: boolean) => Promise<void>;
-  addProduct: (product: { name: string, description: string, price: number, imageUrl: string, category: string, unit: string, specifications?: Record<string, string> }) => Promise<string>;
+  addProduct: (product: { name: string, description: string, price?: number, imageUrl: string, category: string, unit?: string, specifications?: Record<string, string>, showPricing?: boolean, keyFeatures?: string[], [key: string]: any }) => Promise<string>;
   removeProduct: (productId: string) => Promise<void>;
   updateProduct: (product: Product) => Promise<void>;
 }
@@ -302,7 +303,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Add a new product
-  const addProduct = async (product: { name: string, description: string, price: number, imageUrl: string, category: string, unit: string, specifications?: Record<string, string> }): Promise<string> => {
+  const addProduct = async (product: { name: string, description: string, price?: number, imageUrl: string, category: string, unit?: string, specifications?: Record<string, string>, showPricing?: boolean, keyFeatures?: string[], [key: string]: any }): Promise<string> => {
     try {
       // Get current user email or use admin default
       let user = 'admin';
