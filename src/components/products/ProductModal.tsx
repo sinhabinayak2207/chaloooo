@@ -149,14 +149,22 @@ export default function ProductModal({ productId, onClose }: ProductModalProps) 
               </div>
               
               {/* Price Section */}
-              <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-700">
-                  Price: Check with Us
+              {product.showPricing && product.price && product.unit ? (
+                <div className="mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                  <div className="text-2xl font-bold text-green-700">
+                    ₹{product.price.toLocaleString()} {product.unit}
+                  </div>
                 </div>
-                <div className="text-sm text-blue-600 mt-1">
-                  Contact us for the best pricing
+              ) : (
+                <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-700">
+                    Price: Check with Us
+                  </div>
+                  <div className="text-sm text-blue-600 mt-1">
+                    Contact us for the best pricing
+                  </div>
                 </div>
-              </div>
+              )}
               
               <div className="mb-6">
                 <h3 className="text-lg font-medium text-gray-900 mb-2">Description</h3>
