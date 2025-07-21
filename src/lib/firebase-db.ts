@@ -22,7 +22,7 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price?: number; // Made optional to support products without pricing
   imageUrl: string;
   category: string;
   slug: string; // Required for routing
@@ -33,6 +33,7 @@ export interface Product {
   specifications?: Record<string, string>; // Support for product specifications
   keyFeatures?: string[]; // Support for product key features as array of strings
   unit?: string; // Support for product unit (kg, pcs, etc.)
+  showPricing?: boolean; // Whether to display pricing information
 }
 
 /**
