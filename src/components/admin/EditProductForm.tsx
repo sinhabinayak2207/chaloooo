@@ -36,6 +36,7 @@ export default function EditProductForm({ onClose, productId, onProductUpdated }
   const [productImageFile, setProductImageFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+  const [showPricing, setShowPricing] = useState(false);
   const [specifications, setSpecifications] = useState<{key: string, value: string}[]>([{key: '', value: ''}]);
   const [keyFeatures, setKeyFeatures] = useState<string[]>(['']);
   const [productForm, setProductForm] = useState({
@@ -64,6 +65,9 @@ export default function EditProductForm({ onClose, productId, onProductUpdated }
           featured: product.featured || false,
           inStock: product.inStock !== false // Default to true if undefined
         });
+        
+        // Set showPricing based on product data
+        setShowPricing(product.showPricing || false);
 
         // Load specifications if they exist
         if (product.specifications) {
@@ -149,9 +153,21 @@ export default function EditProductForm({ onClose, productId, onProductUpdated }
     try {
       setIsSubmitting(true);
       
-      if (!productForm.name || !productForm.description || !productForm.price || !productForm.category) {
+      if (!productForm.name || !productForm.description || !productForm.category) {
         logToSystem('Please fill all required fields', 'error');
         return;
+      }
+      
+      // Validate pricing fields if pricing is enabled
+      if (showPricing) {
+        if (!productForm.price || parseFloat(productForm.price) <= 0) {
+          logToSystem('Please enter a valid price when pricing is enabled', 'error');
+          return;
+        }
+        if (!productForm.unit || productForm.unit.trim() === '') {
+          logToSystem('Please enter a unit when pricing is enabled', 'error');
+          return;
+        }
       }
       
       // Validate advanced options if they are being added
@@ -211,13 +227,12 @@ export default function EditProductForm({ onClose, productId, onProductUpdated }
       }
       
       // Create updated product object
-      const updatedProduct = {
+      const updatedProduct: any = {
         id: productId,
         name: productForm.name,
         description: productForm.description,
         imageUrl: imageUrl,
-        price: parseFloat(productForm.price),
-        unit: productForm.unit,
+        showPricing: showPricing,
         category: productForm.category,
         featured: productForm.featured,
         inStock: productForm.inStock,
@@ -227,6 +242,14 @@ export default function EditProductForm({ onClose, productId, onProductUpdated }
         specifications: productSpecifications,
         slug: productForm.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
       };
+      
+      // Only add price and unit if pricing is enabled to avoid Firebase undefined errors
+      if (showPricing && productForm.price) {
+        updatedProduct.price = parseFloat(productForm.price);
+      }
+      if (showPricing && productForm.unit) {
+        updatedProduct.unit = productForm.unit;
+      }
       
       // Update product in database
       await productContext.updateProduct(updatedProduct);
@@ -365,37 +388,55 @@ export default function EditProductForm({ onClose, productId, onProductUpdated }
                 </select>
               </div>
               
-              <div className="flex space-x-4">
-                <div className="flex-1">
-                  <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price</label>
-                  <div className="mt-1 relative rounded-md shadow-sm">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <span className="text-gray-500 sm:text-sm">₹</span>
-                    </div>
-                    <input 
-                      type="text" 
-                      id="price" 
-                      name="price" 
-                      value={productForm.price}
-                      onChange={handleProductFormChange}
-                      className="block w-full text-black pl-7 pr-12 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                      placeholder="0.00"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <label htmlFor="unit" className="block text-sm font-medium text-gray-700">Unit</label>
-                  <input
-                    type="text"
-                    id="unit"
-                    name="unit"
-                    value={productForm.unit}
-                    onChange={handleProductFormChange}
-                    className="mt-1 block w-full border text-black border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g., kg, dozen, box, liter"
+              {/* Pricing Toggle */}
+              <div className="border-t pt-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-gray-900">Pricing Information</h3>
+                  <Switch 
+                    id="pricing-toggle" 
+                    checked={showPricing} 
+                    onChange={setShowPricing}
+                    label={showPricing ? "Show Pricing" : "Hide Pricing"}
+                    description={showPricing ? "Price and unit will be displayed" : "Product will show without pricing"}
                   />
                 </div>
+                
+                {showPricing && (
+                  <div className="grid grid-cols-2 gap-4 bg-blue-50 p-4 rounded-md">
+                    <div>
+                      <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price</label>
+                      <div className="mt-1 relative rounded-md shadow-sm">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <span className="text-gray-500 sm:text-sm">₹</span>
+                        </div>
+                        <input 
+                          type="number" 
+                          id="price" 
+                          name="price" 
+                          step="0.01"
+                          min="0"
+                          value={productForm.price}
+                          onChange={handleProductFormChange}
+                          className="block w-full text-black pl-7 pr-12 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="0.00"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="unit" className="block text-sm font-medium text-gray-700">Unit</label>
+                      <input
+                        type="text"
+                        id="unit"
+                        name="unit"
+                        value={productForm.unit}
+                        onChange={handleProductFormChange}
+                        className="mt-1 block w-full border text-black border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., kg, per ton, per piece"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
               
               <div>
