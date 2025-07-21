@@ -36,13 +36,16 @@ export default function AddProductForm({ onClose, onProductAdded }: AddProductFo
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
   const [specifications, setSpecifications] = useState<{key: string, value: string}[]>([{key: '', value: ''}]);
   const [keyFeatures, setKeyFeatures] = useState<string[]>(['']);
+  const [showPricing, setShowPricing] = useState(false);
   const [newProductForm, setNewProductForm] = useState({
     name: '',
     description: '',
     category: 'rice',
     imageUrl: '',
     featured: false,
-    inStock: true
+    inStock: true,
+    price: '',
+    unit: ''
   });
 
   if (!productContext) {
@@ -77,6 +80,18 @@ export default function AddProductForm({ onClose, onProductAdded }: AddProductFo
       if (!newProductForm.name || !newProductForm.description || !newProductForm.category) {
         logToSystem('Please fill all required fields', 'error');
         return;
+      }
+      
+      // Validate pricing fields if pricing is enabled
+      if (showPricing) {
+        if (!newProductForm.price || parseFloat(newProductForm.price) <= 0) {
+          logToSystem('Please enter a valid price when pricing is enabled', 'error');
+          return;
+        }
+        if (!newProductForm.unit || newProductForm.unit.trim() === '') {
+          logToSystem('Please enter a unit when pricing is enabled', 'error');
+          return;
+        }
       }
       
       // Validate advanced options if they are being added
@@ -144,16 +159,25 @@ export default function AddProductForm({ onClose, onProductAdded }: AddProductFo
       logToSystem(`Key Features count: ${productKeyFeatures.length}`, 'info');
       logToSystem(`Specifications count: ${Object.keys(productSpecifications).length}`, 'info');
       
-      // Create product object with the image URL, key features, and specifications
-      const newProduct = {
+      // Create product object with the image URL, key features, specifications, and pricing
+      const newProduct: any = {
         ...newProductForm,
         imageUrl: imageUrl, // Use the uploaded image URL or default
         createdAt: new Date(),
         updatedAt: new Date(),
         updatedBy: user?.email || 'admin',
         keyFeatures: productKeyFeatures,
-        specifications: productSpecifications
+        specifications: productSpecifications,
+        showPricing: showPricing
       };
+      
+      // Only add price and unit if pricing is enabled to avoid Firebase undefined errors
+      if (showPricing && newProductForm.price) {
+        newProduct.price = parseFloat(newProductForm.price);
+      }
+      if (showPricing && newProductForm.unit) {
+        newProduct.unit = newProductForm.unit;
+      }
       
       // Add product to database
       // Explicitly pass the user email to ensure proper permissions
@@ -168,8 +192,11 @@ export default function AddProductForm({ onClose, onProductAdded }: AddProductFo
         category: 'rice',
         imageUrl: '',
         featured: false,
-        inStock: true
+        inStock: true,
+        price: '',
+        unit: ''
       });
+      setShowPricing(false);
       setProductImageFile(null);
       setSpecifications([{key: '', value: ''}]);
       setKeyFeatures(['']);
@@ -317,6 +344,52 @@ export default function AddProductForm({ onClose, onProductAdded }: AddProductFo
                   />
                   <label htmlFor="inStock" className="ml-2 block text-sm text-gray-700">In Stock</label>
                 </div>
+              </div>
+              
+              {/* Pricing Toggle */}
+              <div className="border-t pt-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-gray-900">Pricing Information</h3>
+                  <Switch 
+                    id="pricing-toggle" 
+                    checked={showPricing} 
+                    onChange={setShowPricing}
+                    label={showPricing ? "Show Pricing" : "Hide Pricing"}
+                    description={showPricing ? "Price and unit will be displayed" : "Product will show without pricing"}
+                  />
+                </div>
+                
+                {showPricing && (
+                  <div className="grid grid-cols-2 gap-4 bg-blue-50 p-4 rounded-md">
+                    <div>
+                      <label htmlFor="price" className="block text-sm font-medium text-gray-700">Price</label>
+                      <input 
+                        type="number" 
+                        id="price" 
+                        name="price" 
+                        step="0.01"
+                        min="0"
+                        value={newProductForm.price}
+                        onChange={handleProductFormChange}
+                        className="mt-1 block w-full border text-black border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter price"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="unit" className="block text-sm font-medium text-gray-700">Unit</label>
+                      <input 
+                        type="text" 
+                        id="unit" 
+                        name="unit" 
+                        value={newProductForm.unit}
+                        onChange={handleProductFormChange}
+                        className="mt-1 block w-full border text-black border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., per kg, per ton, per piece"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
               
               {/* Master Admin Advanced Options Toggle - Only visible to master admins */}
