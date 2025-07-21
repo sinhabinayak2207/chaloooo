@@ -10,6 +10,9 @@ export interface Product {
     [key: string]: string;
   };
   relatedProducts?: string[];
+  price?: number;
+  unit?: string;
+  showPricing?: boolean;
 }
 
 export interface ProductCategory {
