@@ -88,7 +88,7 @@ const ContactInfo = () => {
           {[
             { icon: 'facebook', href: 'https://facebook.com' },
             { icon: 'twitter', href: 'https://twitter.com' },
-            { icon: 'linkedin', href: 'https://linkedin.com' },
+           { icon: 'linkedin', href: 'https://www.linkedin.com/company/occworldtrade/' }
             { icon: 'instagram', href: 'https://instagram.com' }
           ].map((social, index) => (
             <a 
