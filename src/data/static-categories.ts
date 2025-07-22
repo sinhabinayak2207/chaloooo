@@ -16,7 +16,7 @@ export const staticCategories: StaticCategory[] = [
     title: 'Rice',
     slug: 'rice',
     description: 'Premium quality rice varieties sourced from the finest farms worldwide.',
-    image: 'https://images.pexels.com/photos/4110251/pexels-photo-4110251.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/images/rice.jpg',
     productCount: 0,
     featured: true
   },
@@ -25,7 +25,7 @@ export const staticCategories: StaticCategory[] = [
     title: 'Seeds',
     slug: 'seeds',
     description: 'High-yield agricultural seeds for various crops and growing conditions.',
-    image: 'https://images.pexels.com/photos/1537169/pexels-photo-1537169.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/images/seeds.jpg',
     productCount: 0,
     featured: true
   },
@@ -34,7 +34,7 @@ export const staticCategories: StaticCategory[] = [
     title: 'Oil',
     slug: 'oil',
     description: 'Refined and crude oils for industrial and commercial applications.',
-    image: 'https://images.pexels.com/photos/1458694/pexels-photo-1458694.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/images/oil.jpg',
     productCount: 0,
     featured: false
   },
@@ -43,7 +43,7 @@ export const staticCategories: StaticCategory[] = [
     title: 'Minerals',
     slug: 'minerals',
     description: 'Industrial-grade polymers for manufacturing and production needs.',
-    image: 'https://images.pexels.com/photos/3825527/pexels-photo-3825527.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/images/minerals.jpg',
     productCount: 0,
     featured: false
   },
@@ -52,7 +52,7 @@ export const staticCategories: StaticCategory[] = [
     title: 'Bromine',
     slug: 'bromine-salt',
     description: 'High-purity bromine compounds for chemical and industrial use.',
-    image: 'https://images.pexels.com/photos/6195085/pexels-photo-6195085.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/images/bromine.jpg',
     productCount: 0,
     featured: false
   },
@@ -61,7 +61,7 @@ export const staticCategories: StaticCategory[] = [
     title: 'Sugar',
     slug: 'sugar',
     description: 'High-quality sugar products for various industrial and commercial applications.',
-    image: 'https://images.pexels.com/photos/6195085/pexels-photo-6195085.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/images/sugar.jpg',
     productCount: 0,
     featured: false
   },
@@ -70,7 +70,7 @@ export const staticCategories: StaticCategory[] = [
     title: 'Special Category',
     slug: 'special-category',
     description: 'Discover our exclusive selection: Explore unique premium products curated just to meet global needs, found only in our special category.',
-    image: 'https://images.pexels.com/photos/4226119/pexels-photo-4226119.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: '/images/special-category.jpg',
     productCount: 0,
     featured: false
   }
