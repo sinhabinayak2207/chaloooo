@@ -66,7 +66,7 @@ const convertDocToProduct = (doc: QueryDocumentSnapshot): Product => {
     id: doc.id,
     name: data.name || '',
     description: data.description || '',
-    price: data.price || 0,
+    price: data.price !== undefined ? data.price : null,
     imageUrl,
     category: data.category || '',
     slug,
@@ -76,7 +76,8 @@ const convertDocToProduct = (doc: QueryDocumentSnapshot): Product => {
     updatedBy: data.updatedBy || 'system',
     specifications: data.specifications || {},
     keyFeatures: Array.isArray(data.keyFeatures) ? data.keyFeatures : [],
-    unit: data.unit || 'kg'
+    unit: data.unit || 'kg',
+    showPricing: data.showPricing !== undefined ? data.showPricing : false
   };
 };
 
@@ -345,18 +346,32 @@ export const addProduct = async (product: Omit<Product, 'id' | 'updatedAt' | 'up
     const productRef = doc(collection(db, 'products'));
     const productId = productRef.id;
     
-    // Set default values and ensure no undefined values
-    const newProduct = {
-      ...product,
+    // Create a base product object without any undefined values
+    const newProduct: Record<string, any> = {
       id: productId,
+      name: product.name,
+      description: product.description,
+      imageUrl: product.imageUrl,
+      category: product.category,
       slug: slug,
       updatedAt: Timestamp.now(),
       updatedBy: updatedBy,
       featured: product.featured || false,
       inStock: product.inStock !== undefined ? product.inStock : true,
       specifications: product.specifications || {},
-      keyFeatures: Array.isArray(product.keyFeatures) ? product.keyFeatures : []
+      keyFeatures: Array.isArray(product.keyFeatures) ? product.keyFeatures : [],
+      showPricing: product.showPricing !== undefined ? product.showPricing : false
     };
+    
+    // Only add price if it's defined and not null
+    if (product.price !== undefined && product.price !== null) {
+      newProduct.price = product.price;
+    }
+    
+    // Only add unit if it's defined
+    if (product.unit) {
+      newProduct.unit = product.unit;
+    }
     
     console.log('Adding product with data:', {
       id: productId,
@@ -605,15 +620,24 @@ export const updateProduct = async (product: Product): Promise<void> => {
     const updateData: Record<string, any> = {
       name: product.name,
       description: product.description,
-      price: product.price,
       category: product.category,
-      unit: product.unit || 'kg',
       slug: product.slug || product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
       featured: product.featured || false,
       inStock: product.inStock !== undefined ? product.inStock : true,
       updatedAt: Timestamp.now(),
-      updatedBy: product.updatedBy || 'system'
+      updatedBy: product.updatedBy || 'system',
+      showPricing: product.showPricing !== undefined ? product.showPricing : false
     };
+    
+    // Add price if provided
+    if (product.price !== undefined && product.price !== null) {
+      updateData.price = product.price;
+    }
+    
+    // Add unit if provided
+    if (product.unit) {
+      updateData.unit = product.unit;
+    }
     
     // Add imageUrl if provided
     if (product.imageUrl) {
