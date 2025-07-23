@@ -21,7 +21,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://octopus-sh.netlify.app'),
+  metadataBase: new URL('https://occworldtrade.com'),
   title: {
     template: "%s | OCC World Trade",
     default: "OCC World Trade - Premium Bulk Products for Global Businesses",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   authors: [{ name: "OCC World Trade Team" }],
   openGraph: {
     type: 'website',
-    url: 'https://octopus-sh.netlify.app',
+    url: 'https://occworldtrade.com',
     title: 'OCC World Trade - Premium Bulk Products for Global Businesses',
     description: 'High-quality bulk commodities and raw materials for businesses worldwide',
     siteName: 'OCC World Trade',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     description: 'High-quality bulk commodities and raw materials for businesses worldwide',
   },
   alternates: {
-    canonical: 'https://octopus-sh.netlify.app',
+    canonical: 'https://occworldtrade.com',
   },
   creator: "OCC World Trade",
   publisher: "OCC World Trade",
