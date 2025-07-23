@@ -1,9 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Set application name
-  env: {
-    APP_NAME: 'OCC World Trade',
-  },
+
   // Ignore TypeScript and ESLint errors during build
   typescript: {
     // !! WARN !!
