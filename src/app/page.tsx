@@ -7,7 +7,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: 'OCC WORLD TRADE - Premium Bulk Products for Global Businesses',
-  description: 'OCC offers high-quality bulk commodities and raw materials including rice, seeds, oil, raw polymers, and bromine salt for businesses worldwide.',
+  description: 'OCC offers high-quality bulk commodities and raw materials including rice, seeds, oil, raw polymers, and bromine for businesses worldwide.',
 };
 
 export default function Home() {
