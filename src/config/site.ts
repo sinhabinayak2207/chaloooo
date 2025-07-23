@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "B2B Showcase",
+  name: "OCC World Trade",
   description: "A modern B2B showcase application",
   url: "https://octopus-sh.netlify.app",
   links: {
