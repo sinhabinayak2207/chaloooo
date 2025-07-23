@@ -62,6 +62,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <title>OCC World Trade - Premium Bulk Products for Global Businesses</title>
+        <link rel="icon" href="/octpopuslogo.jpg" />
         {/* Tawk.to Live Chat Script */}
         <script
           type="text/javascript"
