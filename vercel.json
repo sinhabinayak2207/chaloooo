@@ -7,11 +7,5 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "cleanUrls": true,
-  "projectSettings": {
-    "name": "occ-world-trade",
-    "framework": {
-      "slug": "nextjs"
-    }
-  }
+  "cleanUrls": true
 }
