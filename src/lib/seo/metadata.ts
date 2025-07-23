@@ -8,7 +8,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://yourdomain.com';
 // Default metadata for the site
 export const defaultMetadata: Metadata = {
   title: {
-    default: 'B2B Showcase | Premium Industrial Solutions',
+    default: 'OCC WORLD TRADE | Premium Industrial Solutions',
     template: '%s | B2B Showcase'
   },
   description: 'Leading provider of industrial solutions with premium products and expert services for businesses worldwide.',
@@ -24,21 +24,21 @@ export const defaultMetadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: baseUrl,
-    siteName: 'B2B Showcase',
-    title: 'B2B Showcase | Premium Industrial Solutions',
+    siteName: 'OCC WORLD TRADE',
+    title: 'OCC WORLD TRADE | Premium Industrial Solutions',
     description: 'Leading provider of industrial solutions with premium products and expert services for businesses worldwide.',
     images: [
       {
         url: `${baseUrl}/images/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: 'B2B Showcase',
+        alt: 'OCC',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Showcase | Premium Industrial Solutions',
+    title: 'OCC WORLD TRADE | Premium Industrial Solutions',
     description: 'Leading provider of industrial solutions with premium products and expert services for businesses worldwide.',
     images: [`${baseUrl}/images/twitter-image.jpg`],
     creator: '@yourcompany',
@@ -49,16 +49,16 @@ export const defaultMetadata: Metadata = {
 export function getHomeMetadata(): Metadata {
   return {
     ...defaultMetadata,
-    title: 'B2B Showcase | Premium Industrial Solutions',
+    title: 'OCC WORLD TRADE | Premium Industrial Solutions',
     description: 'Leading provider of industrial solutions with premium products and expert services for businesses worldwide.',
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: 'B2B Showcase | Premium Industrial Solutions',
+      title: 'OCC WORLD TRADE | Premium Industrial Solutions',
       description: 'Leading provider of industrial solutions with premium products and expert services for businesses worldwide.',
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: 'B2B Showcase | Premium Industrial Solutions',
+      title: 'OCC WORLD TRADE | Premium Industrial Solutions',
       description: 'Leading provider of industrial solutions with premium products and expert services for businesses worldwide.',
     },
   };
@@ -71,12 +71,12 @@ export function getProductsMetadata(): Metadata {
     description: 'Explore our comprehensive range of high-quality industrial products designed for performance and reliability.',
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: 'Our Products | B2B Showcase',
+      title: 'Our Products | OCC WORLD TRADE',
       description: 'Explore our comprehensive range of high-quality industrial products designed for performance and reliability.',
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: 'Our Products | B2B Showcase',
+      title: 'Our Products | OCC WORLD TRADE',
       description: 'Explore our comprehensive range of high-quality industrial products designed for performance and reliability.',
     },
   };
@@ -89,12 +89,12 @@ export function getProductCategoryMetadata(categoryName: string, description: st
     description: description || `Explore our range of ${categoryName} products designed for optimal performance and reliability.`,
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: `${categoryName} | B2B Showcase`,
+      title: `${categoryName} | OCC WORLD TRADE`,
       description: description || `Explore our range of ${categoryName} products designed for optimal performance and reliability.`,
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: `${categoryName} | B2B Showcase`,
+      title: `${categoryName} | OCC WORLD TRADE`,
       description: description || `Explore our range of ${categoryName} products designed for optimal performance and reliability.`,
     },
   };
@@ -108,7 +108,7 @@ export function getProductMetadata(product: Product): Metadata {
     keywords: [...(defaultMetadata.keywords as string[]), product.title, product.category],
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: `${product.title} | B2B Showcase`,
+      title: `${product.title} | OCC WORLD TRADE`,
       description: product.description || `Learn more about ${product.title}, a premium product in our ${product.category} category.`,
       images: product.image ? [
         {
@@ -121,7 +121,7 @@ export function getProductMetadata(product: Product): Metadata {
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: `${product.title} | B2B Showcase`,
+      title: `${product.title} | OCC WORLD TRADE`,
       description: product.description || `Learn more about ${product.title}, a premium product in our ${product.category} category.`,
       images: product.image ? [product.image.startsWith('http') ? product.image : `${baseUrl}${product.image}`] : defaultMetadata.twitter?.images,
     },
@@ -135,12 +135,12 @@ export function getServicesMetadata(): Metadata {
     description: 'Discover our comprehensive range of professional services designed to optimize your business operations and drive growth.',
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: 'Our Services | B2B Showcase',
+      title: 'Our Services | OCC WORLD TRADE',
       description: 'Discover our comprehensive range of professional services designed to optimize your business operations and drive growth.',
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: 'Our Services | B2B Showcase',
+      title: 'Our Services | OCC WORLD TRADE',
       description: 'Discover our comprehensive range of professional services designed to optimize your business operations and drive growth.',
     },
   };
@@ -154,7 +154,7 @@ export function getServiceMetadata(service: Service): Metadata {
     keywords: [...(defaultMetadata.keywords as string[]), service.title, 'service', 'business solution'],
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: `${service.title} | B2B Showcase`,
+      title: `${service.title} | OCC WORLD TRADE`,
       description: service.description || `Learn more about our ${service.title} service and how it can benefit your business.`,
       images: service.image ? [
         {
@@ -167,7 +167,7 @@ export function getServiceMetadata(service: Service): Metadata {
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: `${service.title} | B2B Showcase`,
+      title: `${service.title} | OCC WORLD TRADE`,
       description: service.description || `Learn more about our ${service.title} service and how it can benefit your business.`,
       images: service.image ? [service.image.startsWith('http') ? service.image : `${baseUrl}${service.image}`] : defaultMetadata.twitter?.images,
     },
@@ -181,12 +181,12 @@ export function getContactMetadata(): Metadata {
     description: 'Get in touch with our team for inquiries, support, or to discuss how our solutions can help your business.',
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: 'Contact Us | B2B Showcase',
+      title: 'Contact Us | OCC WORLD TRADE',
       description: 'Get in touch with our team for inquiries, support, or to discuss how our solutions can help your business.',
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: 'Contact Us | B2B Showcase',
+      title: 'Contact Us | OCC WORLD TRADE',
       description: 'Get in touch with our team for inquiries, support, or to discuss how our solutions can help your business.',
     },
   };
@@ -199,12 +199,12 @@ export function getAboutMetadata(): Metadata {
     description: 'Learn about our company, our mission, values, and the team behind our innovative B2B solutions.',
     openGraph: {
       ...defaultMetadata.openGraph,
-      title: 'About Us | B2B Showcase',
+      title: 'About Us | OCC WORLD TRADE',
       description: 'Learn about our company, our mission, values, and the team behind our innovative B2B solutions.',
     },
     twitter: {
       ...defaultMetadata.twitter,
-      title: 'About Us | B2B Showcase',
+      title: 'About Us | OCC WORLD TRADE',
       description: 'Learn about our company, our mission, values, and the team behind our innovative B2B solutions.',
     },
   };
